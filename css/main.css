@@ -1,15 +1,9 @@
-
-body{
-    background-color: skyblue;
-}
-
+ 
 body > *{
     margin-left:auto;
     margin-right:auto;
     text-align:center;
 }
 
-#title{
-    color: #00bfff
-}
+ 
     
