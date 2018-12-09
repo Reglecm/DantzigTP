@@ -117,6 +117,7 @@ function Iteration(algo){
 		contraintes.forEach(function(contr, index){
 			iter.addContrainte(contr);
 		});
+		return iter;
 	}
 }
 
