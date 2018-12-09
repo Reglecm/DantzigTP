@@ -20,24 +20,52 @@
 
         <div class="row">
 
-            <div class="col-md-4 col-centered">
+            <div class="col-centered">
 
-                <form>
-                    <div class="form-group">
-                        <label for="Inputs">Nombre de contraintes</label>
-                        <input class="form-control" type="number" id="Inputs" min="0" max="10">
-                    </div>
+                <div class="form-group">
+                    <label for="InputsHB">Nombre de Variables Hors Base</label>
+                    <input class="form-control" type="number" id="InputsHB" min="0" max="10">
+                </div>
 
-                    <div id="Generated_Fields">
-                            <!--  Inputs to be generated here -->
-  
-                    </div>
+                <div id="Generated_HBFields" class="gen">
+                    <!--  InputsHB to be generated here -->
 
-                    <button type="submit" class="btn btn-primary">Valider</button>
-                </form>
+                </div>
 
             </div>
 
+        </div>
+
+        <div class="row">
+
+            <div class="col-centered">
+
+                <div class="form-group">
+                    <label for="InputsC">Nombre de contraintes</label>
+                    <input class="form-control" type="number" id="InputsC" min="0" max="10">
+                </div>
+
+                <div id="Generated_CFields" class="gen">
+                    <!--  InputsC to be generated here -->
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="FE">Fonction économique</label>
+                    <div>
+                        <label>Z = </label>
+                        <input class="form-control" type="text" id="FE">
+                    </div>
+                </div>
+
+                <button type="button" id="goBTN" class="btn btn-primary">Valider</button>
+            </div>
         </div>
 
     </div>

@@ -13,8 +13,6 @@ body > *{
     margin: 0 auto;
 }
  
-
-.contrainte{
-    margin:20px;
+.gen{
+    display: flex;
 }
-    
