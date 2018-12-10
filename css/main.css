@@ -1,22 +1,28 @@
- 
-body > *{
- 
-    text-align:center;
-}
+ body>* {
 
-.content{
-    margin-top:100px;
-}
+     text-align: center;
+ }
 
-.col-centered{
-    float: none;
-    margin: 0 auto;
-}
- 
-.gen{
-    display: flex;
-}
+ .content {
+     margin-top: 100px;
+ }
 
-.row{
-    margin:30px 0px 30px 0px;
-}
+ .col-centered {
+     float: none;
+     margin: 0 auto;
+ }
+
+ .gen {
+     display: flex;
+ }
+
+ .row {
+     margin: 30px 0px 30px 0px;
+ }
+
+ #Credits {
+     margin:20px;
+     position: fixed;
+     bottom: 0;
+     right: 0;
+ }
