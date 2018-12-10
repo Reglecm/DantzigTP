@@ -24,7 +24,21 @@ $(document).ready(function () {
         }
     });
 
-    //Build Fonction Economique
+    //Bouton Valider
+    $('#goBTN').click(function () {
+        var arr = [0]; //constante 0
+        arr = arr.concat(GetHB());//Ajout des variables hors base
+        arr = arr.concat(GetContraintes());//Ajout de n 0 (n contraintes)
+
+        console.log("-----test reception des données-----\n");
+        console.log("  -Variables Hors base: ",GetHB());
+        console.log("  -Contraintes ",GetContraintes());
+        console.log("  -Lancement du programme avec :",arr);
+        console.log("------------------------------------\n");
+
+        var It = new Iteration(arr);
+        It.logic();
+    })
 
 
 })
@@ -68,8 +82,8 @@ function GenerateFields(cas, n) {
 
 }
 
+//Build Fonction Economique
 function BuildFe() {
-    console.log('in')
     $('#FE').val('');
     GetHB().forEach(function (hb, i) {
         $('#FE').get(0).value += hb + "X" + i + " ";
@@ -83,22 +97,19 @@ function GetHB() {
     Array.from($("#Generated_HBFields  :input")).forEach(function (hb) {
         var val = $(hb).val();
         if (val == 0) HB.push(0);
-        else HB.push(val);
+        else HB.push(parseInt(val));
 
     });
     return HB
 }
 
+function GetContraintes() {
+    var Contraintes = [];
+    Array.from($("#Generated_CFields  :input")).forEach(function (c) {
+        var val = $(c).val();
+        if (val == 0) Contraintes.push(0);
+        else Contraintes.push(parseInt(val));
 
-
-// //Bouton Valider
-// $('#goBTN').click(function () {
-//     GetContraintes();
-// })
-
-
-
-
-function Main() {
-
+    });
+    return Contraintes
 }

@@ -29,6 +29,7 @@ function Iteration(algo){
 			}
 		});
 		this.vEntree = theIndex;
+		console.log("vEntree :",vEntree);
 	};
 
 	//idRi se trouve avec findEquationEchange
@@ -37,6 +38,7 @@ function Iteration(algo){
 		algo.forEach(function(num, index){
 			if(num != 0 && this.algo[index] == 0){
 				this.vSortie = index;
+				console.log("vSortie :",VSortie);
 			}
 		})
 	};
