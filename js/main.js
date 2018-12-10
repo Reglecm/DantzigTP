@@ -35,7 +35,14 @@ $(document).ready(function () {
     $('#goBTN').click(function () {
         var arr = [0]; //constante 0
         arr = arr.concat(GetHB()); //Ajout des variables hors base
-        arr = arr.concat(GetContraintes()); //Ajout de n 0 (n contraintes)
+
+        var It = new Iteration();
+        GetContraintes().forEach(function (c, i) {
+            var resultat = c.splice(-1, 1);
+            It.addContrainte(new Contrainte(c, resultat));
+            console.log(It.contraintes[i])
+        })
+        It.logic();
 
         console.log("-----test reception des données-----\n");
         console.log("  -Variables Hors base: ", GetHB());
@@ -43,12 +50,8 @@ $(document).ready(function () {
         console.log("  -Lancement du programme avec :", arr);
         console.log("------------------------------------\n");
 
-        var It = new Iteration();
-        GetContraintes().forEach(function (c, i) {
-            It.addContrainte(new Contrainte())
-        })
-        console.log()
-        It.logic();
+
+
     })
 
 })
@@ -63,7 +66,7 @@ function GenerateFields(cas, n) {
             for (var i = 0; i < n; i++) { //Générer n champs
                 Fields.append('<div style="margin:15px;">' +
                     '<label for="InputsC">Contrainte ' + (i + 1) + '</label>' +
-                    '<input class="form-control contrainte" placeholder="nombre de paramètres" type="number" id="' + (i + 1) + '">' +
+                    '<input class="form-control contrainte" min="0" max="10" placeholder="nombre de paramètres" type="number" id="' + (i + 1) + '">' +
                     '</div>');
             }
             break;
@@ -109,14 +112,13 @@ function BuildCparam(input, parentdiv) {
     for (var i = 0; i < ival; i++) {
 
         if (i == (ival - 1)) {
-            $(jiD).append(' <input class="form-control" value="=" type="text"> <input class="form-control" type="text" id="Param' + i + '">');
+            $(jiD).append(' = <input class="form-control" type="text" id="Param' + i + '">');
         } else {
             $(jiD).append(' <input class="form-control" type="text" id="Param' + i + '">');
         }
     }
 }
 
- 
 
 
 function GetHB() {
@@ -132,11 +134,13 @@ function GetHB() {
 
 function GetContraintes() {
     var Contraintes = [];
-    Array.from($("#Generated_CFields  :input")).forEach(function (c) {
-        var val = $(c).val();
-        if (val == 0) Contraintes.push(0);
-        else Contraintes.push(parseInt(val));
 
+    Array.from($('[id^=Generate_Params]')).forEach(function (c, i) {
+        var Param = [];
+        Array.from($(c).find('input')).forEach(function (param, j) {
+            Param[j] = parseInt($(param).val());
+        })
+        Contraintes[i] = Param;
     });
     return Contraintes
 }
