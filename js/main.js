@@ -3,6 +3,13 @@ $(document).on('change', '.VHB', function () {
     BuildFe();
 });
 
+$(document).on('change', '.contrainte', function () {
+    var parentdiv = $(this).parent();
+    BuildCparam($(this), parentdiv);
+
+});
+
+
 $(document).ready(function () {
 
     console.log("main.js is ready ");
@@ -27,19 +34,22 @@ $(document).ready(function () {
     //Bouton Valider
     $('#goBTN').click(function () {
         var arr = [0]; //constante 0
-        arr = arr.concat(GetHB());//Ajout des variables hors base
-        arr = arr.concat(GetContraintes());//Ajout de n 0 (n contraintes)
+        arr = arr.concat(GetHB()); //Ajout des variables hors base
+        arr = arr.concat(GetContraintes()); //Ajout de n 0 (n contraintes)
 
         console.log("-----test reception des données-----\n");
-        console.log("  -Variables Hors base: ",GetHB());
-        console.log("  -Contraintes ",GetContraintes());
-        console.log("  -Lancement du programme avec :",arr);
+        console.log("  -Variables Hors base: ", GetHB());
+        console.log("  -Contraintes ", GetContraintes());
+        console.log("  -Lancement du programme avec :", arr);
         console.log("------------------------------------\n");
 
-        var It = new Iteration(arr);
+        var It = new Iteration();
+        GetContraintes().forEach(function (c, i) {
+            It.addContrainte(new Contrainte())
+        })
+        console.log()
         It.logic();
     })
-
 
 })
 
@@ -53,7 +63,7 @@ function GenerateFields(cas, n) {
             for (var i = 0; i < n; i++) { //Générer n champs
                 Fields.append('<div style="margin:15px;">' +
                     '<label for="InputsC">Contrainte ' + (i + 1) + '</label>' +
-                    '<input class="form-control contrainte" type="text" id="' + (i + 1) + '">' +
+                    '<input class="form-control contrainte" placeholder="nombre de paramètres" type="number" id="' + (i + 1) + '">' +
                     '</div>');
             }
             break;
@@ -64,14 +74,10 @@ function GenerateFields(cas, n) {
             Fields.html(''); //Vider d'abord
             for (var i = 0; i < n; i++) { //Générer n champs
 
-                var br = "";
-                if (i == 5) {
-                    br = "<br/>"
-                }
                 Fields.append('<div style="margin:15px;">' +
                     '<label for="InputsHB">Variable ' + (i + 1) + '</label>' +
                     '<input class="form-control VHB" type="text" id="' + (i + 1) + '">' +
-                    '</div>' + br);
+                    '</div>');
             }
             break;
 
@@ -88,6 +94,33 @@ function BuildFe() {
     GetHB().forEach(function (hb, i) {
         $('#FE').get(0).value += hb + "X" + i + " ";
     });
+
+}
+
+
+function BuildCparam(input, parentdiv) {
+    var iD = 'Generate_Params' + $(input).attr('id');
+    var jiD = '#' + iD;
+    var ival = $(input).val();
+
+    if (!$(jiD).length) {
+        $(parentdiv).append('<div id="' + iD + '" class="gen"> a </div>');
+    }
+
+    $(jiD).html('');
+
+    for (var i = 0; i < ival; i++) {
+
+
+        if (i == (ival - 1)) {
+            $(jiD).append(' <input class="form-control" value="=" type="text" style="width:15%"> <input class="form-control" type="text" id="Param' + i + '">');
+        } else {
+            $(jiD).append(' <input class="form-control" type="text" id="Param' + i + '">');
+        }
+    }
+}
+
+function GetCParams() {
 
 }
 
