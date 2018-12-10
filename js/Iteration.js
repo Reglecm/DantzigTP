@@ -57,9 +57,11 @@ function Iteration(algo){
 	};
 	this.calculateNextAlgo = function(){
 		var i = this.findEquationEchange();
-		var tempAlgo = this.contraintes[i].algo;
+		var tempAlgo = this.contraintes[i].algo.slice();
+		console.log("Tempalgo: " + tempAlgo);
 		var divider = tempAlgo[this.vEntree]
 		tempAlgo[this.vEntree] = 0;
+		console.log("Test Contrainte: " + this.contraintes[0].algo);
 		var newAlgo = [];
 		this.contraintes[i].algo.forEach(function(num, index){
 			var newnum = num * -1 / divider;
@@ -73,12 +75,14 @@ function Iteration(algo){
 			num += newAlgo[index] * multiplier;
 			finalAlgo.push(num);
 		});
+		finalAlgo[this.vEntree] = 0;
 		return finalAlgo;
 	}
 
 	this.calculateNewContraintes = function(){
 		var ind = this.findEquationEchange();
-		var tempAlgoEchange = this.contraintes[ind].algo;
+		var tempAlgoEchange = this.contraintes[ind].algo.slice();
+		var tempResul = this.contraintes[ind].resultat;
 		console.log("Equation d echange: " + tempAlgoEchange);
 		var divider = tempAlgoEchange[this.vEntree];
 		tempAlgoEchange[this.vEntree] = 0;
@@ -91,18 +95,20 @@ function Iteration(algo){
 			algoTempRemp.push(num);
 		}
 		var newContraintes = [];
-		var contraintesRemp = new Contrainte(algoTempRemp, tempAlgoEchange.resultat);
+		var contraintesRemp = new Contrainte(algoTempRemp, tempResul);
 		for(var algo in this.contraintes){
 			if(algo == ind){
 				newContraintes.push(this.contraintes[algo])
 				continue;
 			}else{
 				var tableautemp = [];
-				for(var num in this.contraintes[algo]){
-					var newNumero = this.contraintes[algo][num] + (this.contraintes[algo][this.vEntree] * contraintesRemp.algo[num]);
+				for(var num in this.contraintes[algo].algo){
+					var newNumero = this.contraintes[algo].algo[num] + (this.contraintes[algo].algo[this.vEntree] * contraintesRemp.algo[num]);
+					console.log("NEW NUMERO: " + newNumero);
 					tableautemp.push(newNumero);
 				}
-				var resul = this.contraintes[algo].resultat + contraintesRemp.resultat * this.contraintes[algo][this.vEntree];
+				console.log("contresTemp result: " + contraintesRemp.resultat);
+				var resul = this.contraintes[algo].resultat + contraintesRemp.resultat * this.contraintes[algo].algo[this.vEntree];
 				tableautemp[this.vEntree] = 0;
 				newContraintes.push(new Contrainte(tableautemp,  resul));
 			}
@@ -115,7 +121,7 @@ function Iteration(algo){
 	this.checkFinal = function(){
 		var test = true;
 		this.algo.forEach(function(num, index){
-			if(index > 0 && num >= 0){
+			if(index > 0 && num > 0){
 				console.log("check is false");
 				test =  false;
 			}
@@ -126,15 +132,16 @@ function Iteration(algo){
 	this.logic = function(){
 		if(this.checkFinal()){
 			console.log("Check was true, end of the program:");
+			console.log(this.algo);
 			return this.algo;
 		}
 		this.findVEntree();
 		this.calculateAllRi();
 		this.findVSortie(this.findEquationEchange());
-		console.log(this.contraintes[0]);
 		
 		var algo = this.calculateNextAlgo();
 		console.log(algo);
+		console.log(this.contraintes[0]);
 		var contraintes = this.calculateNewContraintes();
 		var iter = new Iteration(algo);
 		console.log(iter);
