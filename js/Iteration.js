@@ -14,9 +14,10 @@ function Iteration(algo){
 	this.Ri = [];
 	this.addContrainte = function(contrainte){ this.contraintes.push(contrainte); };
 	this.calculateAllRi = function(){
-		this.contraintes.forEach(function(contrainte){
-			this.Ri.push(contrainte.resultat / contrainte.algo[this.vEntree]);
-		});
+		for(var contrainte in this.contraintes){
+			console.log(this.contraintes[contrainte]);
+			this.Ri.push(this.contraintes[contrainte].resultat / this.contraintes[contrainte].algo[this.vEntree]);
+		};
 	};
 
 	this.findVEntree = function(){
@@ -29,18 +30,17 @@ function Iteration(algo){
 			}
 		});
 		this.vEntree = theIndex;
-		console.log("vEntree :",vEntree);
+		console.log("Valeur d'entree: " + this.vEntree);
 	};
 
 	//idRi se trouve avec findEquationEchange
 	this.findVSortie = function(idRi){
 		var algo = this.contraintes[idRi].algo;
-		algo.forEach(function(num, index){
-			if(num != 0 && this.algo[index] == 0){
+		for(var index in algo){
+			if(algo[index] != 0 && this.algo[index] == 0){
 				this.vSortie = index;
-				console.log("vSortie :",VSortie);
 			}
-		})
+		};
 	};
 
 	this.findEquationEchange = function(){
@@ -83,41 +83,48 @@ function Iteration(algo){
 			newAlgo.push(newnum);
 		});
 		var newContraintes = [];
-		this.contraintes.forEach(function(contrainte){
-			var finalContrainte = new Contrainte();
-			var multiplier = contrainte.algo[this.vEntree];
-			contraintes.algo[this.vEntree] = 0;
-			contrainte.algo.forEach(function(num, index){
+		for(var i in this.contraintes){
+			var finalContrainte = new Contrainte([], 0);
+			var multiplier = this.contraintes[i].algo[this.vEntree];
+			this.contraintes[i].algo[this.vEntree] = 0;
+			for(var index in this.contraintes[i].algo){
+				var num = this.contraintes[i].algo[num];
 				num += newAlgo[index] * multiplier;
-				finalContraite.algo.push(num);
-			});
-			newContraintes.push(finalContraite);
-		});
+				finalContrainte.algo.push(num);
+			};
+			newContraintes.push(finalContrainte);
+		};
 		return newContraintes;
 		
 	};
 
 	this.checkFinal = function(){
+		var test = true;
 		this.algo.forEach(function(num, index){
 			if(index > 0 && num >= 0){
-				return False;
+				console.log("check is false");
+				test =  false;
 			}
 		});
-		return True;
+		return test;
 	}
 
 	this.logic = function(){
-		if(this.checkFinal){
+		if(this.checkFinal()){
+			console.log("Check was true, end of the program:");
 			return this.algo;
 		}
 		this.findVEntree();
 		this.calculateAllRi();
 		this.findVSortie(this.findEquationEchange());
 		var algo = this.calculateNextAlgo();
+		console.log(algo);
 		var contraintes = this.calculateNewContraintes();
 		var iter = new Iteration(algo);
+		console.log(iter);
 		contraintes.forEach(function(contr, index){
 			iter.addContrainte(contr);
+			console.log(contr);
 		});
 		return iter;
 	}
