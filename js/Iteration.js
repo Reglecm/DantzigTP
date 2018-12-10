@@ -12,6 +12,8 @@ function Iteration(algo){
 	this.vSortie = 0;
 	this.contraintes = [];
 	this.Ri = [];
+	this.first = null;
+	this.setFirstIteration = function(iter){this.first = iter;}
 	this.addContrainte = function(contrainte){ this.contraintes.push(contrainte); };
 	this.calculateAllRi = function(){
 		for(var contrainte in this.contraintes){
@@ -118,6 +120,35 @@ function Iteration(algo){
 		
 	};
 
+	this.zmax = function(){
+		var calc = Array(this.first.length).fill(0);
+		for(var cont in this.contraintes){
+			for(var i in this.contraintes[cont].algo){
+				if(this.first[i] !== 0 && this.contraintes[cont].algo[i] !== 0){
+					calc[i] = (this.contraintes[cont].resultat / this.contraintes[cont].algo[i]);
+				}
+			}
+		}
+		var resultat = [];
+		for(var i in this.first){
+			if(this.first[i] !== 0){
+				if(this.algo[i] == 0){
+					for(var y in this.algo){
+						if(y > i && y !== 0){
+							this.algo[i] = this.algo[y];
+							this.algo[y] = 0;
+							break;
+						}
+					}
+				}
+			}
+		}
+		for(var i in calc){
+			resultat.push(calc[i] * this.algo[i]);
+		}
+		console.log(resultat.reduce((a, b) => a + b, 0));
+	};
+
 	this.checkFinal = function(){
 		var test = true;
 		this.algo.forEach(function(num, index){
@@ -133,7 +164,13 @@ function Iteration(algo){
 		if(this.checkFinal()){
 			console.log("Check was true, end of the program:");
 			console.log(this.algo);
+			console.log("Z Max:");
+			console.log(this.zmax());
 			return this.algo;
+		}
+		if(this.first == null){
+			this.first = this.algo.slice();
+			console.log(this.first);
 		}
 		this.findVEntree();
 		this.calculateAllRi();
@@ -144,6 +181,7 @@ function Iteration(algo){
 		console.log(this.contraintes[0]);
 		var contraintes = this.calculateNewContraintes();
 		var iter = new Iteration(algo);
+		iter.setFirstIteration(this.first);
 		console.log(iter);
 		contraintes.forEach(function(contr, index){
 			iter.addContrainte(contr);
