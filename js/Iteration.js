@@ -77,7 +77,7 @@ function Iteration(algo, iteration = 0){
 		var finalAlgo = [];
 		tempAlgo2.forEach(function(num, index){
 			num += newAlgo[index] * multiplier;
-			finalAlgo.push(parseFloat(num.toFixed(4)));
+			finalAlgo.push(Math.round(num.toFixed(4) * 1000) / 1000);
 		});
 		finalAlgo[0] += this.contraintes[i].resultat / divider * multiplier;
 		finalAlgo[this.vEntree] = 0;
@@ -107,7 +107,7 @@ function Iteration(algo, iteration = 0){
 				var temporaire = [];
 				var divi = this.contraintes[algo].algo[this.vEntree];
 				for(var num in this.contraintes[algo].algo){
-					temporaire.push(parseFloat((this.contraintes[algo].algo[num] / divi).toFixed(4)));
+					temporaire.push(Math.round((this.contraintes[algo].algo[num] / divi) * 10000) / 10000);
 				}
 				newContraintes.push(new Contrainte(temporaire, this.contraintes[algo].resultat/divi));
 				continue;
@@ -116,12 +116,12 @@ function Iteration(algo, iteration = 0){
 				for(var num in this.contraintes[algo].algo){
 					var newNumero = this.contraintes[algo].algo[num] + (this.contraintes[algo].algo[this.vEntree] * contraintesRemp.algo[num]);
 					console.log("NEW NUMERO: " + newNumero);
-					tableautemp.push(parseFloat(newNumero.toFixed(4)));
+					tableautemp.push(Math.round(newNumero.toFixed(4) * 1000) / 10000);
 				}
 				console.log("contresTemp result: " + contraintesRemp.resultat);
 				var resul = this.contraintes[algo].resultat - contraintesRemp.resultat / divider * this.contraintes[algo].algo[this.vEntree];
 				tableautemp[this.vEntree] = 0;
-				newContraintes.push(new Contrainte(tableautemp,  parseFloat(resul.toFixed(4))));
+				newContraintes.push(new Contrainte(tableautemp,  Math.round(resul.toFixed(4) * 1000) /1000) );
 			}
 		}
 
