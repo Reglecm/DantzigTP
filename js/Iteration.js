@@ -26,7 +26,7 @@ function Iteration(algo){
 		var theNum = this.algo[1];
 		var theIndex = 1;
 		this.algo.forEach(function(num, index){
-			if(num > theNum && index > 0){
+			if(num > theNum && index > 0 && num >= 0){
 				theNum = num;
 				theIndex = index;
 			}
