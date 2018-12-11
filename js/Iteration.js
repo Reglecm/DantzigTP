@@ -161,16 +161,16 @@ function Iteration(algo){
 	}
 
 	this.logic = function(){
+		if(this.first == null){
+			this.first = this.algo.slice();
+			console.log(this.first);
+		}
 		if(this.checkFinal()){
 			console.log("Check was true, end of the program:");
 			console.log(this.algo);
 			console.log("Z Max:");
 			console.log(this.zmax());
 			return [this.algo, this.zmax()];
-		}
-		if(this.first == null){
-			this.first = this.algo.slice();
-			console.log(this.first);
 		}
 		this.findVEntree();
 		this.calculateAllRi();
