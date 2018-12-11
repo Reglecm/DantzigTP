@@ -61,7 +61,9 @@ $(document).ready(function () {
             It.addContrainte(new Contrainte(c, resultat[0]));
             console.log(It.contraintes[i])
         })
-        It.logic();
+        While(!Array.isArray(It)){
+            It = It.logic();
+        }
 
         console.log("-----test reception des données-----\n");
         console.log("  -Variables Hors base: ", GetHB());
