@@ -102,7 +102,7 @@ function Iteration(algo){
 			if(algo == ind){
 				var temporaire = [];
 				var divi = this.contraintes[algo].algo[this.vEntree];
-				for(var num in this.contraintes[algo]){
+				for(var num in this.contraintes[algo].algo){
 					temporaire.push(this.contraintes[algo].algo[num] / divi);
 				}
 				newContraintes.push(new Contrainte(temporaire, this.contraintes[algo].algo[num]/divi));
