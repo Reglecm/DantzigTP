@@ -146,7 +146,7 @@ function Iteration(algo){
 		for(var i in calc){
 			resultat.push(calc[i] * this.algo[i]);
 		}
-		console.log(resultat.reduce((a, b) => a + b, 0));
+		return resultat.reduce((a, b) => a + b, 0);
 	};
 
 	this.checkFinal = function(){
@@ -166,7 +166,7 @@ function Iteration(algo){
 			console.log(this.algo);
 			console.log("Z Max:");
 			console.log(this.zmax());
-			return this.algo;
+			return [this.algo, this.zmax()];
 		}
 		if(this.first == null){
 			this.first = this.algo.slice();
