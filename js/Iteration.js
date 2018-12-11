@@ -171,27 +171,6 @@ function Iteration(algo){
 		if(this.first == null){
 			this.first = this.algo.slice();
 			console.log(this.first);
-		}else{
-			this.findVEntree();
-		this.calculateAllRi();
-		this.findVSortie(this.findEquationEchange());
-		
-		var algo = this.calculateNextAlgo();
-		console.log(algo);
-		console.log(this.contraintes[0]);
-		var contraintes = this.calculateNewContraintes();
-		var iter = new Iteration(algo);
-		iter.setFirstIteration(this.first);
-		console.log(iter);
-		contraintes.forEach(function(contr, index){
-			iter.addContrainte(contr);
-			console.log(contr);
-		});
-		console.log("Check was true, end of the program:");
-			console.log(iter.algo);
-			console.log("Z Max:");
-			console.log(iter.zmax());
-			return [iter.algo, iter.zmax()];
 		}
 		if(this.checkFinal()){
 			console.log("Check was true, end of the program:");
