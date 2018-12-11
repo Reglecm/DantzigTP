@@ -161,8 +161,8 @@ function Iteration(algo, iteration = 0){
 	this.checkFinal = function(){
 		var test = true;
 		this.algo.forEach(function(num, index){
-			if(index > 0 && num < 0){
-				console.log("check is false");
+			if(index > 0 && num > 0){
+				console.log("check is false because num = " + num);
 				test =  false;
 			}
 		});
