@@ -26,7 +26,7 @@ function Iteration(algo){
 		var theNum = this.algo[1];
 		var theIndex = 1;
 		this.algo.forEach(function(num, index){
-			if(num > theNum && index > 0 && num >= 0){
+			if(num > theNum && index > 0){
 				theNum = num;
 				theIndex = index;
 			}
@@ -50,7 +50,7 @@ function Iteration(algo){
 		var min = this.Ri[0];
 		this.Ri.forEach(function(ri){
 			console.log(ri);
-			if(ri < min){
+			if(ri < min && ri >= 0){
 				min = ri;
 			}
 		});
