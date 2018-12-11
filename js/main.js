@@ -56,12 +56,13 @@ $(document).ready(function () {
             c.unshift(0); //ajoute 0 au début
             c = c.concat(ZER); //ajoute les 0 * n contraintes
 
-            var resultat = c.splice(-1, 1);//enlève le résultat à la fin
+            var resultat = c.splice(-1, 1); //enlève le résultat à la fin
 
             It.addContrainte(new Contrainte(c, resultat[0]));
-            console.log(It.contraintes[i])
+            console.log(It.contraintes[i]);
         })
-        While(!Array.isArray(It)){
+
+        while (!Array.isArray(It)) {
             It = It.logic();
         }
 
