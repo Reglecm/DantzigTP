@@ -77,6 +77,7 @@ function Iteration(algo){
 			num += newAlgo[index] * multiplier;
 			finalAlgo.push(num);
 		});
+		finalAlgo[0] += newAlgo[0] * multiplier;
 		finalAlgo[this.vEntree] = 0;
 		return finalAlgo;
 	}
@@ -126,7 +127,7 @@ function Iteration(algo){
 	};
 
 	this.zmax = function(){
-		var calc = Array(this.first.length).fill(0);
+		/*var calc = Array(this.first.length).fill(0);
 		for(var cont in this.contraintes){
 			for(var i in this.contraintes[cont].algo){
 				if(this.first[i] !== 0 && this.contraintes[cont].algo[i] !== 0){
@@ -150,8 +151,8 @@ function Iteration(algo){
 		}
 		for(var i in calc){
 			resultat.push(calc[i] * this.algo[i]);
-		}
-		return resultat.reduce((a, b) => a + b, 0);
+		}*/
+		return this.algo[0];
 	};
 
 	this.checkFinal = function(){
