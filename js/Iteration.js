@@ -49,9 +49,12 @@ function Iteration(algo, iteration = 0){
 	};
 
 	this.findEquationEchange = function(){
-		var min = this.Ri[0];
+		var min = null;
 		this.Ri.forEach(function(ri){
 			console.log(ri);
+			if(min == null && ri >= 0){
+				min = ri;
+			}
 			if(ri < min && ri >= 0){
 				min = ri;
 			}
