@@ -23,8 +23,8 @@ function Iteration(algo){
 	};
 
 	this.findVEntree = function(){
-		var theNum = 0;
-		var theIndex = 0;
+		var theNum = this.algo[1];
+		var theIndex = 1;
 		this.algo.forEach(function(num, index){
 			if(num > theNum && index > 0){
 				theNum = num;
