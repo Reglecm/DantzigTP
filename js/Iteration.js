@@ -100,7 +100,12 @@ function Iteration(algo){
 		var contraintesRemp = new Contrainte(algoTempRemp, tempResul);
 		for(var algo in this.contraintes){
 			if(algo == ind){
-				newContraintes.push(this.contraintes[algo])
+				var temporaire = [];
+				var divi = this.contraintes[algo].algo[this.vEntree];
+				for(var num in this.contraintes[algo]){
+					temporaire.push(this.contraintes[algo].algo[num] / divi);
+				}
+				newContraintes.push(new Contrainte(temporaire, this.contraintes[algo].algo[num]/divi));
 				continue;
 			}else{
 				var tableautemp = [];
