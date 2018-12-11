@@ -3,13 +3,15 @@ function Contrainte(tableau, resultat){
 	this.resultat = resultat;
 }
 
-function Iteration(algo){
+function Iteration(algo, iteration = 0){
 	//l index 0 est pour la constante
 	this.algo = algo;
 	//index du X
 	this.vEntree = 0;
 	//index du X
 	this.vSortie = 0;
+	this.iteration = iteration;
+	this.iteration++;
 	this.contraintes = [];
 	this.Ri = [];
 	this.first = null;
@@ -187,13 +189,20 @@ function Iteration(algo){
 		console.log(algo);
 		console.log(this.contraintes[0]);
 		var contraintes = this.calculateNewContraintes();
-		var iter = new Iteration(algo);
+		var iter = new Iteration(algo, this.iteration);
 		iter.setFirstIteration(this.first);
 		console.log(iter);
 		contraintes.forEach(function(contr, index){
 			iter.addContrainte(contr);
 			console.log(contr);
 		});
+		if(this.iteration == 10){
+			console.log("Check was true, end of the program:");
+			console.log(this.algo);
+			console.log("Z Max:");
+			console.log(this.zmax());
+			return [this.algo, this.zmax()];
+		}
 		return iter;
 	}
 }
