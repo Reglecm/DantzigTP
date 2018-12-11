@@ -77,6 +77,7 @@ function Iteration(algo){
 			num += newAlgo[index] * multiplier;
 			finalAlgo.push(num);
 		});
+		finalAlgo[0] += newAlgo[0] * multiplier;
 		finalAlgo[this.vEntree] = 0;
 		return finalAlgo;
 	}
@@ -100,7 +101,12 @@ function Iteration(algo){
 		var contraintesRemp = new Contrainte(algoTempRemp, tempResul);
 		for(var algo in this.contraintes){
 			if(algo == ind){
-				newContraintes.push(this.contraintes[algo])
+				var temporaire = [];
+				var divi = this.contraintes[algo].algo[this.vEntree];
+				for(var num in this.contraintes[algo].algo){
+					temporaire.push(this.contraintes[algo].algo[num] / divi);
+				}
+				newContraintes.push(new Contrainte(temporaire, this.contraintes[algo].algo[num]/divi));
 				continue;
 			}else{
 				var tableautemp = [];
@@ -121,7 +127,7 @@ function Iteration(algo){
 	};
 
 	this.zmax = function(){
-		var calc = Array(this.first.length).fill(0);
+		/*var calc = Array(this.first.length).fill(0);
 		for(var cont in this.contraintes){
 			for(var i in this.contraintes[cont].algo){
 				if(this.first[i] !== 0 && this.contraintes[cont].algo[i] !== 0){
@@ -145,8 +151,8 @@ function Iteration(algo){
 		}
 		for(var i in calc){
 			resultat.push(calc[i] * this.algo[i]);
-		}
-		return resultat.reduce((a, b) => a + b, 0);
+		}*/
+		return this.algo[0];
 	};
 
 	this.checkFinal = function(){
