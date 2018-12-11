@@ -72,12 +72,12 @@ function Iteration(algo, iteration = 0){
 			newAlgo.push(newnum);
 		});
 		var multiplier = this.algo[this.vEntree];
-		var tempAlgo2 = this.algo;
+		var tempAlgo2 = this.algo.slice(0);
 		tempAlgo2[this.vEntree] = 0;
 		var finalAlgo = [];
 		tempAlgo2.forEach(function(num, index){
 			num += newAlgo[index] * multiplier;
-			finalAlgo.push(Math.round(num.toFixed(4) * 1000) / 1000);
+			finalAlgo.push(num);
 		});
 		finalAlgo[0] += this.contraintes[i].resultat / divider * multiplier;
 		finalAlgo[this.vEntree] = 0;
@@ -107,7 +107,7 @@ function Iteration(algo, iteration = 0){
 				var temporaire = [];
 				var divi = this.contraintes[algo].algo[this.vEntree];
 				for(var num in this.contraintes[algo].algo){
-					temporaire.push(Math.round((this.contraintes[algo].algo[num] / divi) * 10000) / 10000);
+					temporaire.push(this.contraintes[algo].algo[num] / divi);
 				}
 				newContraintes.push(new Contrainte(temporaire, this.contraintes[algo].resultat/divi));
 				continue;
@@ -116,12 +116,12 @@ function Iteration(algo, iteration = 0){
 				for(var num in this.contraintes[algo].algo){
 					var newNumero = this.contraintes[algo].algo[num] + (this.contraintes[algo].algo[this.vEntree] * contraintesRemp.algo[num]);
 					console.log("NEW NUMERO: " + newNumero);
-					tableautemp.push(Math.round(newNumero.toFixed(4) * 1000) / 10000);
+					tableautemp.push(newNumero);
 				}
 				console.log("contresTemp result: " + contraintesRemp.resultat);
 				var resul = this.contraintes[algo].resultat - contraintesRemp.resultat / divider * this.contraintes[algo].algo[this.vEntree];
 				tableautemp[this.vEntree] = 0;
-				newContraintes.push(new Contrainte(tableautemp,  Math.round(resul.toFixed(4) * 1000) /1000) );
+				newContraintes.push(new Contrainte(tableautemp,  resul));
 			}
 		}
 
@@ -161,7 +161,7 @@ function Iteration(algo, iteration = 0){
 	this.checkFinal = function(){
 		var test = true;
 		this.algo.forEach(function(num, index){
-			console.log("Index " + index + " : " + num);
+			console.log("Index " + index + " : " + num)
 			if(index > 0 && num > 0){
 				console.log("check is false because num = " + num);
 				test =  false;
