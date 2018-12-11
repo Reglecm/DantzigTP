@@ -77,7 +77,7 @@ function Iteration(algo, iteration = 0){
 		var finalAlgo = [];
 		tempAlgo2.forEach(function(num, index){
 			num += newAlgo[index] * multiplier;
-			finalAlgo.push(num);
+			finalAlgo.push(parseInt(num.toFixed(4)));
 		});
 		finalAlgo[0] += this.contraintes[i].resultat / divider * multiplier;
 		finalAlgo[this.vEntree] = 0;
@@ -116,12 +116,12 @@ function Iteration(algo, iteration = 0){
 				for(var num in this.contraintes[algo].algo){
 					var newNumero = this.contraintes[algo].algo[num] + (this.contraintes[algo].algo[this.vEntree] * contraintesRemp.algo[num]);
 					console.log("NEW NUMERO: " + newNumero);
-					tableautemp.push(newNumero);
+					tableautemp.push(parseInt(newNumero.toFixed(4)));
 				}
 				console.log("contresTemp result: " + contraintesRemp.resultat);
 				var resul = this.contraintes[algo].resultat - contraintesRemp.resultat / divider * this.contraintes[algo].algo[this.vEntree];
 				tableautemp[this.vEntree] = 0;
-				newContraintes.push(new Contrainte(tableautemp,  resul));
+				newContraintes.push(new Contrainte(tableautemp,  parseInt(resul.toFixed(4))));
 			}
 		}
 
