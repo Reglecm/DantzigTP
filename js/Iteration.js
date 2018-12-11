@@ -23,10 +23,10 @@ function Iteration(algo){
 	};
 
 	this.findVEntree = function(){
-		var theNum = this.algo[1];
-		var theIndex = 1;
+		var theNum = 0;
+		var theIndex = 0;
 		this.algo.forEach(function(num, index){
-			if(num > theNum && index > 0){
+			if(num > theNum){
 				theNum = num;
 				theIndex = index;
 			}
@@ -77,7 +77,6 @@ function Iteration(algo){
 			num += newAlgo[index] * multiplier;
 			finalAlgo.push(num);
 		});
-		finalAlgo[0] += this.contraintes[i].resultat / divider * multiplier;
 		finalAlgo[this.vEntree] = 0;
 		return finalAlgo;
 	}
@@ -127,7 +126,7 @@ function Iteration(algo){
 	};
 
 	this.zmax = function(){
-		/*var calc = Array(this.first.length).fill(0);
+		var calc = Array(this.first.length).fill(0);
 		for(var cont in this.contraintes){
 			for(var i in this.contraintes[cont].algo){
 				if(this.first[i] !== 0 && this.contraintes[cont].algo[i] !== 0){
@@ -151,8 +150,8 @@ function Iteration(algo){
 		}
 		for(var i in calc){
 			resultat.push(calc[i] * this.algo[i]);
-		}*/
-		return this.algo[0];
+		}
+		return resultat.reduce((a, b) => a + b, 0);
 	};
 
 	this.checkFinal = function(){
