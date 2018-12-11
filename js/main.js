@@ -36,10 +36,29 @@ $(document).ready(function () {
         var arr = [0]; //constante 0
         arr = arr.concat(GetHB()); //Ajout des variables hors base
 
-        var It = new Iteration();
+        var ZER = [];
+
+        //Ajoute autant de 0 qu'il y a de contraintes
+        for (var i = 0; i < GetContraintes().length; i++) {
+            ZER.push(0);
+        }
+
+        arr = arr.concat(ZER);
+
+
+        console.log(arr, GetHB(), GetContraintes());
+        console.log(arr.length, GetHB().length, GetContraintes().length);
+
+        var It = new Iteration(arr);
+
         GetContraintes().forEach(function (c, i) {
-            var resultat = c.splice(-1, 1);
-            It.addContrainte(new Contrainte(c, resultat));
+
+            c.unshift(0); //ajoute 0 au début
+            c = c.concat(ZER); //ajoute les 0 * n contraintes
+
+            var resultat = c.splice(-1, 1);//enlève le résultat à la fin
+
+            It.addContrainte(new Contrainte(c, resultat[0]));
             console.log(It.contraintes[i])
         })
         It.logic();
@@ -51,10 +70,10 @@ $(document).ready(function () {
         console.log("------------------------------------\n");
 
 
-
     })
 
 })
+
 
 function GenerateFields(cas, n) {
 
