@@ -45,20 +45,27 @@ $(document).ready(function () {
 
         arr = arr.concat(ZER);
 
-
         console.log(arr, GetHB(), GetContraintes());
         console.log(arr.length, GetHB().length, GetContraintes().length);
 
         var It = new Iteration(arr);
 
         GetContraintes().forEach(function (c, i) {
+       
+            var res = c[c.length-1];
+            c.splice(-1, 1); //enlève le résultat à la fin
+
+            var tempTab = ZER.slice(0);
+            tempTab[i] = 1;
 
             c.unshift(0); //ajoute 0 au début
-            c = c.concat(ZER); //ajoute les 0 * n contraintes
+            c = c.concat(tempTab); //ajoute les 0 * n contraintes
+ 
+            
+            console.log("C: "+ c);
+            console.log("Resultat: "+ res);
 
-            var resultat = c.splice(-1, 1); //enlève le résultat à la fin
-
-            It.addContrainte(new Contrainte(c, resultat[0]));
+            It.addContrainte(new Contrainte(c, res));
             console.log(It.contraintes[i]);
         })
 
@@ -88,7 +95,7 @@ function GenerateFields(cas, n) {
             for (var i = 0; i < n; i++) { //Générer n champs
                 Fields.append('<div style="margin:15px;">' +
                     '<label for="InputsC">Contrainte ' + (i + 1) + '</label>' +
-                    '<input class="form-control contrainte" min="0" max="10" placeholder="nombre de paramètres" type="number" id="' + (i + 1) + '">' +
+                    '<input class="form-control contrainte" min="3" max="10" placeholder="nombre de paramètres" type="number" id="' + (i + 1) + '">' +
                     '</div>');
             }
             break;
