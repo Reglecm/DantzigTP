@@ -77,7 +77,7 @@ function Iteration(algo){
 			num += newAlgo[index] * multiplier;
 			finalAlgo.push(num);
 		});
-		finalAlgo[0] += newAlgo[0] * multiplier;
+		finalAlgo[0] += this.contraintes[i].resultat * multiplier;
 		finalAlgo[this.vEntree] = 0;
 		return finalAlgo;
 	}
