@@ -23,10 +23,10 @@ function Iteration(algo){
 	};
 
 	this.findVEntree = function(){
-		var theNum = 0;
-		var theIndex = 0;
+		var theNum = this.algo[1];
+		var theIndex = 1;
 		this.algo.forEach(function(num, index){
-			if(num > theNum){
+			if(num > theNum && index > 0){
 				theNum = num;
 				theIndex = index;
 			}
@@ -77,6 +77,7 @@ function Iteration(algo){
 			num += newAlgo[index] * multiplier;
 			finalAlgo.push(num);
 		});
+		finalAlgo[0] += this.contraintes[i].resultat / divider * multiplier;
 		finalAlgo[this.vEntree] = 0;
 		return finalAlgo;
 	}
@@ -86,6 +87,7 @@ function Iteration(algo){
 		var tempAlgoEchange = this.contraintes[ind].algo.slice();
 		var tempResul = this.contraintes[ind].resultat;
 		console.log("Equation d echange: " + tempAlgoEchange);
+
 		var divider = tempAlgoEchange[this.vEntree];
 		tempAlgoEchange[this.vEntree] = 0;
 		var algoTempRemp = [];
@@ -105,7 +107,7 @@ function Iteration(algo){
 				for(var num in this.contraintes[algo].algo){
 					temporaire.push(this.contraintes[algo].algo[num] / divi);
 				}
-				newContraintes.push(new Contrainte(temporaire, this.contraintes[algo].algo[num]/divi));
+				newContraintes.push(new Contrainte(temporaire, this.contraintes[algo].resultat/divi));
 				continue;
 			}else{
 				var tableautemp = [];
@@ -115,7 +117,7 @@ function Iteration(algo){
 					tableautemp.push(newNumero);
 				}
 				console.log("contresTemp result: " + contraintesRemp.resultat);
-				var resul = this.contraintes[algo].resultat + contraintesRemp.resultat * this.contraintes[algo].algo[this.vEntree];
+				var resul = this.contraintes[algo].resultat - contraintesRemp.resultat / divider * this.contraintes[algo].algo[this.vEntree];
 				tableautemp[this.vEntree] = 0;
 				newContraintes.push(new Contrainte(tableautemp,  resul));
 			}
@@ -126,7 +128,7 @@ function Iteration(algo){
 	};
 
 	this.zmax = function(){
-		var calc = Array(this.first.length).fill(0);
+		/*var calc = Array(this.first.length).fill(0);
 		for(var cont in this.contraintes){
 			for(var i in this.contraintes[cont].algo){
 				if(this.first[i] !== 0 && this.contraintes[cont].algo[i] !== 0){
@@ -150,8 +152,8 @@ function Iteration(algo){
 		}
 		for(var i in calc){
 			resultat.push(calc[i] * this.algo[i]);
-		}
-		return resultat.reduce((a, b) => a + b, 0);
+		}*/
+		return this.algo[0];
 	};
 
 	this.checkFinal = function(){
