@@ -175,6 +175,7 @@ function Iteration(algo, iteration = 0){
 
 	this.logic = function(){
 		if(this.first == null){
+			allIter = [];
 			this.first = this.algo.slice();
 			console.log(this.first);
 		}
