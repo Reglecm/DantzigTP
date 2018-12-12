@@ -184,7 +184,7 @@ function Iteration(algo, iteration = 0){
 			console.log(this.algo);
 			console.log("Z Max:");
 			console.log(this.zmax());
-			allIter.push(this.zmax());
+			allIter.push([this.algo, this.zmax()]);
 			return allIter;
 		}
 		this.findVEntree();
