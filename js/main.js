@@ -1,29 +1,52 @@
-$(document).on('change', '.VHB', function () {
-    //$(C).val(), $(C).attr("class")
+$(document).on('keydown keyup', '.VHB , #InputsHB', function () {
     BuildFe();
 });
 
-$(document).on('change', '.contrainte', function () {
+$(document).on('keydown keyup', '.contrainte', function () {
     var parentdiv = $(this).parent();
     BuildCparam($(this), parentdiv);
 });
 
-$(document).on('change', '#InputsHB, #InputsC, .contrainte', function () {
 
-    if ($(this).val() > 10) {
-        $(this).val(10)
-    }
-    if ($(this).val() < 0) {
-        $(this).val(0)
-    }
+$('#InputsHB , #InputsC').on('keydown keyup', function (e) {
 
+    var e46 = e.keyCode !== 46; // keycode for delete
+    var e8 = e.keyCode !== 8; // keycode for backspace
+    var valp = $(this).val() > 10;
+    var valm = $(this).val() < 10; //currently not working for x < 0
+
+    if (valp && e46 && e8 || valm < 0 && e46 && e8) {
+        console.log(valp);
+        e.preventDefault();
+        switch ($(this).attr('id')) {
+            case 'InputsHB':
+                alert('Attention, vous ne pouvez mettre que 10 Variables Hors Base');
+                break;
+            case 'InputsC':
+                alert('Attention, vous ne pouvez mettre que 10 Contraintes');
+                break;
+
+            default:
+                break;
+        }
+
+        if ($(this).hasClass('contrainte')) {
+            alert('Attention, vous ne pouvez mettre que 10 paramètres');
+        }
+
+        if (valp) $(this).val(10);
+        if (valm) $(this).val(0);
+    }
 });
 
 
 
-
-
 $(document).ready(function () {
+ 
+    $('#1').on('click',function(){
+        console.log($(this));
+    })
+
 
     console.log("main.js is ready ");
 
@@ -112,7 +135,7 @@ function GenerateFields(cas, n) {
             for (var i = 0; i < n; i++) { //Générer n champs
                 Fields.append('<div style="margin:15px;">' +
                     '<label for="InputsC">Contrainte ' + (i + 1) + '</label>' +
-                    '<input class="form-control contrainte" min="3" max="10" placeholder="nombre de paramètres" type="number" id="' + (i + 1) + '">' +
+                    '<input class="form-control contrainte" min="3" max="10" placeholder="params" type="number" id="' + (i + 1) + '">' +
                     '</div>');
             }
             break;
@@ -144,7 +167,10 @@ function BuildFe() {
 }
 
 
-function BuildCparam(input, parentdiv) {
+function BuildCparam(input) {
+
+    var parentdiv = $(input).parent();
+
     var iD = 'Generate_Params' + $(input).attr('id');
     var jiD = '#' + iD;
     var ival = $(input).val();
@@ -170,10 +196,10 @@ function BuildCparam(input, parentdiv) {
 function GetHB() {
     var HB = [];
     Array.from($("#Generated_HBFields  :input")).forEach(function (hb) {
+        console.log(hb);
         var val = $(hb).val();
         if (val == 0) HB.push(0);
         else HB.push(parseInt(val));
-
     });
     return HB
 }
@@ -182,6 +208,7 @@ function GetContraintes() {
     var Contraintes = [];
 
     Array.from($('[id^=Generate_Params]')).forEach(function (c, i) {
+        console.log(c);
         var Param = [];
         Array.from($(c).find('input')).forEach(function (param, j) {
             Param[j] = parseInt($(param).val());
@@ -200,28 +227,17 @@ function FillTable(It) {
         scrollTop: $('#resultTable').offset().top
     }, 'slow');
 
-    var TABGraph = [];
-
-    var VE = [];
-    var VS = [];
+    // var TABGraph = [];
+    var iter = [];
     var Z = [];
 
     console.log(It);
 
-    It.forEach(function (tab, i) {
-        if (i !== It.length - 1) {
-            VE.push(tab[0]);
-            VS.push(tab[1]);
-            Z.push(tab[2][0]);
-        } else {
-            TABGraph.push(VE, VS, Z);
-            TABGraph.push(tab[1])
-        }
-    });
 
 
+    //--------------------TABLE-----------------------
     var TB = $('#tableBody');
-    var T = It.length-1;
+    var T = It.length - 1;
 
     for (var i = 0; i < T; i++) {
 
@@ -229,19 +245,64 @@ function FillTable(It) {
 
             var TrID = "Tr" + i;
             $(TB).append('<tr id="' + TrID + '">');
-
             var Tr = document.getElementById(TrID);
-    
 
-            for (var j = T ; j >= 0; j--) {
+            for (var j = T; j >= 0; j--) {
                 var x = Tr.insertCell(0);
                 $(x).html(It[i][j]);
             }
-
             $(TB).append('</tr>');
-        } else {
-
         }
     }
+    //--------------------TABLE-----------------------
+
+    //--------------------Graph-----------------------
+    It.forEach(function (tab, i) {
+        if (i !== It.length - 1) {
+            iter.push("Itération " + tab[0]);
+            Z.push(tab[3]);
+        } else {
+            iter.push("Itération ZMax");
+            Z.push(tab[1]); //Ajouter ZMAX
+        }
+    });
+
+    console.log(iter, Z, Z[3]);
+
+    // TABGraph = TABGraph.concat([iter], [Z]);
+
+    var ctx = document.getElementById('Graph').getContext('2d');
+    var Graph = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: iter,
+            datasets: [{
+                pointRadius: 15,
+                pointHoverRadius: 15,
+                label: "Valeur de Z",
+                borderColor: 'blue',
+                data: [{
+                    x: Z[0],
+                    y: Z[0]
+                }, {
+                    x: Z[1],
+                    y: Z[1]
+                }, {
+                    x: Z[2],
+                    y: Z[2]
+                }, {
+                    x: Z[3],
+                    y: Z[3]
+                }]
+            }]
+        },
+        options: {}
+    });
+
+    $('#Graph').html(Graph);
+
+
+    //--------------------Graph-----------------------
+
 
 }

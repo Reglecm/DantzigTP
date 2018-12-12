@@ -9,6 +9,7 @@
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- package sympa pour faire des graph -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script src="node_modules/chartjs/chart.js"></script>
 </head>
 
@@ -61,7 +62,7 @@
                     <label for="FE">Fonction économique</label>
                     <div>
                         <label>Z = </label>
-                        <input class="form-control" type="text" id="FE">
+                        <input class="form-control" type="text" id="FE" readonly>
                     </div>
                 </div>
 
@@ -86,6 +87,12 @@
 
                 </tbody>
             </table>
+
+        </div>
+
+
+        <div id="GraphDiv" class="row">
+            <canvas id="Graph"></canvas>
 
         </div>
 
