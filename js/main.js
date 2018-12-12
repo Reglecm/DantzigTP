@@ -6,8 +6,21 @@ $(document).on('change', '.VHB', function () {
 $(document).on('change', '.contrainte', function () {
     var parentdiv = $(this).parent();
     BuildCparam($(this), parentdiv);
+});
+
+$(document).on('change', '#InputsHB, #InputsC, .contrainte', function () {
+
+    if ($(this).val() > 10) {
+        $(this).val(10)
+    }
+    if ($(this).val() < 0) {
+        $(this).val(0)
+    }
 
 });
+
+
+
 
 
 $(document).ready(function () {
@@ -51,8 +64,8 @@ $(document).ready(function () {
         var It = new Iteration(arr);
 
         GetContraintes().forEach(function (c, i) {
-       
-            var res = c[c.length-1];
+
+            var res = c[c.length - 1];
             c.splice(-1, 1); //enlève le résultat à la fin
 
             var tempTab = ZER.slice(0);
@@ -60,10 +73,10 @@ $(document).ready(function () {
 
             c.unshift(0); //ajoute 0 au début
             c = c.concat(tempTab); //ajoute les 0 * n contraintes
- 
-            
-            console.log("C: "+ c);
-            console.log("Resultat: "+ res);
+
+
+            console.log("C: " + c);
+            console.log("Resultat: " + res);
 
             It.addContrainte(new Contrainte(c, res));
             console.log(It.contraintes[i]);
@@ -79,7 +92,7 @@ $(document).ready(function () {
         console.log("  -Lancement du programme avec :", arr);
         console.log("------------------------------------\n");
 
-
+        FillTable(It);
     })
 
 })
@@ -122,7 +135,7 @@ function GenerateFields(cas, n) {
 function BuildFe() {
     $('#FE').val('');
     GetHB().forEach(function (hb, i) {
-        $('#FE').get(0).value += hb + "X" + i + " ";
+        $('#FE').get(0).value += hb + "X" + (i + 1) + " ";
     });
 }
 
@@ -172,4 +185,52 @@ function GetContraintes() {
         Contraintes[i] = Param;
     });
     return Contraintes
+}
+
+
+function FillTable(It) {
+
+    $('#resultTable').show();
+
+    var TAB = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+    ]
+
+    var VE = [];
+    var VS = [];
+    var Z = [];
+
+    console.log(It);
+
+
+    It.forEach(function (tab, i) {
+        tab.forEach(function (v, i) {
+            VE.push(tab[0]);
+            VS.push(tab[1]);
+            Z.push(tab[2[0]]);
+        })
+    });
+
+    TAB.push(VE, VS, Z);
+
+    var TB = $('#tableBody');
+
+    for (var i = 0; i < VE.length; i++) {
+
+        var TrID = "Tr" + i;
+        $(TB).append('<tr id="' + TrID + '">');
+
+        var Tr = document.getElementById(TrID);
+
+        for (var j = VE.length; j >= 0; j--) {
+            var x = Tr.insertCell(0);
+            $(x).html(VE[i][j]);
+        }
+
+        $(TB).append('</tr>');
+
+    }
+
 }
