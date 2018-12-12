@@ -2,7 +2,7 @@ function Contrainte(tableau, resultat){
 	this.algo = tableau;
 	this.resultat = resultat;
 }
-
+var allIter = [];
 function Iteration(algo, iteration = 0){
 	//l index 0 est pour la constante
 	this.algo = algo;
@@ -179,16 +179,19 @@ function Iteration(algo, iteration = 0){
 			console.log(this.first);
 		}
 		if(this.checkFinal()){
+
 			console.log("Check was true, end of the program:");
 			console.log(this.algo);
 			console.log("Z Max:");
 			console.log(this.zmax());
-			return [this.algo, this.zmax()];
+			allIter.push(this.zmax());
+			return allIter;
 		}
 		this.findVEntree();
 		this.calculateAllRi();
 		this.findVSortie(this.findEquationEchange());
 		
+		allIter.push([this.vEntree, this.vSortie, this.algo]);
 		var algo = this.calculateNextAlgo();
 		console.log(algo);
 		console.log(this.contraintes[0]);
