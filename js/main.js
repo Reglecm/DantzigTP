@@ -46,6 +46,9 @@ $(document).ready(function () {
 
     //Bouton Valider
     $('#goBTN').click(function () {
+
+        $('#resultTable').show();
+
         var arr = [0]; //constante 0
         arr = arr.concat(GetHB()); //Ajout des variables hors base
 
@@ -92,6 +95,7 @@ $(document).ready(function () {
         console.log("  -Lancement du programme avec :", arr);
         console.log("------------------------------------\n");
 
+        $('#tableBody').html('');
         FillTable(It);
     })
 
@@ -120,7 +124,7 @@ function GenerateFields(cas, n) {
             for (var i = 0; i < n; i++) { //Générer n champs
 
                 Fields.append('<div style="margin:15px;">' +
-                    '<label for="InputsHB">Variable ' + (i + 1) + '</label>' +
+                    '<label for="InputsHB">X ' + (i + 1) + '</label>' +
                     '<input class="form-control VHB" type="text" id="' + (i + 1) + '">' +
                     '</div>');
             }
@@ -192,11 +196,11 @@ function FillTable(It) {
 
     $('#resultTable').show();
 
-    var TAB = [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9]
-    ]
+    $('html,body').animate({
+        scrollTop: $('#resultTable').offset().top
+    }, 'slow');
+
+    var TABGraph = [];
 
     var VE = [];
     var VS = [];
@@ -204,33 +208,40 @@ function FillTable(It) {
 
     console.log(It);
 
-
     It.forEach(function (tab, i) {
-        tab.forEach(function (v, i) {
+        if (i !== It.length - 1) {
             VE.push(tab[0]);
             VS.push(tab[1]);
-            Z.push(tab[2[0]]);
-        })
+            Z.push(tab[2][0]);
+        } else {
+            TABGraph.push(VE, VS, Z);
+            TABGraph.push(tab[1])
+        }
     });
 
-    TAB.push(VE, VS, Z);
 
     var TB = $('#tableBody');
+    var T = It.length-1;
 
-    for (var i = 0; i < VE.length; i++) {
+    for (var i = 0; i < T; i++) {
 
-        var TrID = "Tr" + i;
-        $(TB).append('<tr id="' + TrID + '">');
+        if (i !== T) {
 
-        var Tr = document.getElementById(TrID);
+            var TrID = "Tr" + i;
+            $(TB).append('<tr id="' + TrID + '">');
 
-        for (var j = VE.length; j >= 0; j--) {
-            var x = Tr.insertCell(0);
-            $(x).html(VE[i][j]);
+            var Tr = document.getElementById(TrID);
+    
+
+            for (var j = T ; j >= 0; j--) {
+                var x = Tr.insertCell(0);
+                $(x).html(It[i][j]);
+            }
+
+            $(TB).append('</tr>');
+        } else {
+
         }
-
-        $(TB).append('</tr>');
-
     }
 
 }
