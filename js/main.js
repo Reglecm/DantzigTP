@@ -42,8 +42,8 @@ $('#InputsHB , #InputsC').on('keydown keyup', function (e) {
 
 
 $(document).ready(function () {
- 
-    $('#1').on('click',function(){
+
+    $('#1').on('click', function () {
         console.log($(this));
     })
 
@@ -196,7 +196,6 @@ function BuildCparam(input) {
 function GetHB() {
     var HB = [];
     Array.from($("#Generated_HBFields  :input")).forEach(function (hb) {
-        console.log(hb);
         var val = $(hb).val();
         if (val == 0) HB.push(0);
         else HB.push(parseInt(val));
@@ -208,7 +207,6 @@ function GetContraintes() {
     var Contraintes = [];
 
     Array.from($('[id^=Generate_Params]')).forEach(function (c, i) {
-        console.log(c);
         var Param = [];
         Array.from($(c).find('input')).forEach(function (param, j) {
             Param[j] = parseInt($(param).val());
@@ -234,11 +232,10 @@ function FillTable(It) {
     console.log(It);
 
 
-
     //--------------------TABLE-----------------------
     var TB = $('#tableBody');
     var T = It.length - 1;
-
+ 
     for (var i = 0; i < T; i++) {
 
         if (i !== T) {
@@ -246,8 +243,10 @@ function FillTable(It) {
             var TrID = "Tr" + i;
             $(TB).append('<tr id="' + TrID + '">');
             var Tr = document.getElementById(TrID);
-
-            for (var j = T; j >= 0; j--) {
+            console.log(It.length);
+            for (var j = It.length ; j >= 0; j--) {
+                console.log(i,j);
+                console.log("lel  ",It[i][j]);
                 var x = Tr.insertCell(0);
                 $(x).html(It[i][j]);
             }
@@ -255,6 +254,7 @@ function FillTable(It) {
         }
     }
     //--------------------TABLE-----------------------
+
 
     //--------------------Graph-----------------------
     It.forEach(function (tab, i) {
@@ -268,7 +268,7 @@ function FillTable(It) {
     });
 
     console.log(iter, Z, Z[3]);
-
+      
     // TABGraph = TABGraph.concat([iter], [Z]);
 
     var ctx = document.getElementById('Graph').getContext('2d');

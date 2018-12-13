@@ -190,6 +190,7 @@ function Iteration(algo, iteration = 0) {
 			console.log(this.algo);
 			console.log("Z Max:");
 			console.log(this.zmax());
+			$('#ShowZmax').html('<h1>Zmax : '+ this.zmax() +'</h1>');// Afficher Zmax
 			allIter.push([this.algo, this.zmax()]);
 			return allIter;
 		}
