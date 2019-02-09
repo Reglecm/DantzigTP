@@ -13,3 +13,7 @@ Les différentes fonctionnalités de l'application sont:
 Merci Aden pour nous faire comprendre le projet 👌
 Merci à Gwendael pour ses algorithmes mathématiques poussés et sa capacité à résoudre le problèmes
 Merci à Guillaume pour le front de l'application le transfert des données vers le back et l'affichage des données.
+
+
+
+got 13.50/20 :'( 
